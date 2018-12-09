@@ -51,7 +51,7 @@ function CustomizedTable(props) {
         </TableHead>
         <TableBody>
           {
-            props.body.map((row, index) => {
+            props.body && props.body.map((row, index) => {
               return (
                     <TableRow key={index} className={classes.row}>
                       <CustomTableCell numeric>{new Buffer(row[0], 'hex').toString()}</CustomTableCell>

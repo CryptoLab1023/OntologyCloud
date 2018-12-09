@@ -12,7 +12,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 import './App.css';
 
-const scriptHash = '06ee25ef9592c8f04033b40c089e068bd30d4c3b'; /** contract hash */
+const scriptHash = 'a35c358b9f7aed5538700ddbbf075ae9e2452b37'; /** contract hash */
 
 class App extends Component {
 
@@ -110,9 +110,11 @@ class App extends Component {
     const price = await this.callContractRead('getPrice', [{ type: 'String', value: account }])
     const amount = await this.callContractRead('getAmount', [{ type: 'String', value: account }])
     let body = await this.callContractRead('showAll', [])
-    let history = await this.callContractRead('showAll', [{ type: 'String', value: account }])
+    if (body == "00")
+        body = []
+    // let history = await this.callContractRead('getHistory', [{ type: 'String', value: account }])
     console.log({account, price, amount, balance, body})
-    this.setState({ account, balanceOng: balance.ONG, balanceOnt: balance.ONT, provider, amount: parseInt(amount.toString(), 16), price: parseInt(price.toString(), 16), body, history });
+    this.setState({ account, balanceOng: balance.ONG, balanceOnt: balance.ONT, provider, amount: parseInt(amount.toString(), 16), price: parseInt(price.toString(), 16), body });
   }
 
   componentDidMount = async () => {
@@ -151,7 +153,7 @@ class App extends Component {
                   <Input type="text" style={input} placeholder="Fill in Number" onChange={(e) => this.setState({ updatePrice: e.target.value })} value={this.state.updatePrice} required/>
                   <Input type="text" style={input} placeholder="Fill in Number" onChange={(e) => this.setState({ updateAmount: e.target.value })} value={this.state.updateAmount} required />
                   <Button variant="contained" color={'primary'} onClick={() => this.updateStorage()}>Update</Button>
-                  <Button variant="contained" color={'danger'} onClick={() => this.deleteStorage()}>Delete Storage</Button>
+                  <Button variant="contained" color={'secondary'} onClick={() => this.deleteStorage()}>Delete Storage</Button>
                 </div>
                 :
                 <div style={box}>
